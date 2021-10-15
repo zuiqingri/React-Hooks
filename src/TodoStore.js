@@ -10,15 +10,12 @@ export const TodoContext=React.createContext();
 
 const TodoStore=()=> {
   const [todos,setTodos]=useState([]);
-  const [newTodo,setNewTodo]=useState();
+  
 
   const loading=useFetch(setTodos,'https://jsonplaceholder.typicode.com/users');
-  const changeInputData = (e) => {
-        setNewTodo(e.target.value);
-        
-      }
-  const addTodo = (e) => {
-        e.preventDefault();
+
+  const addTodo = (newTodo) => {
+
     //setTodos([...todos, {userId: 1, id: 1, title: newTodo, completed: false}]);
         setTodos([...todos,{'name':newTodo,'id':todos.length+1}]);
   }
@@ -44,7 +41,7 @@ const TodoStore=()=> {
 
       return (
       <TodoContext.Provider value={
-        {todos,addTodo,changeInputData,loading,changeTodoStatus}}>
+        {todos,addTodo,loading,changeTodoStatus}}>
         <div className="TodoStore">
           <Header />
           <Form />
