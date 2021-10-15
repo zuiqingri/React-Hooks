@@ -4,8 +4,11 @@ import './App.css';
 import List from './List.jsx'
 import useFetch from './useFetch';
 import Header from './Header.jsx';
+import Form from './Form.jsx';
 
-function App() {
+export const TodoContext=React.createContext();
+
+const TodoStore=()=> {
   const [todos,setTodos]=useState([]);
   const [newTodo,setNewTodo]=useState();
 
@@ -40,16 +43,15 @@ function App() {
   },[todos])
 
       return (
-      <div className="App">
-        <Header todos={todos} />
-
-        <form action="">
-          <input type="text" name="" onChange={changeInputData}/>
-          <button onClick={addTodo}>ToDo</button>
-        </form>
-        <List todos={todos} loading={loading} changeTodoStatus={changeTodoStatus}/>
-      </div>
+      <TodoContext.Provider value={
+        {todos,addTodo,changeInputData,loading,changeTodoStatus}}>
+        <div className="TodoStore">
+          <Header />
+          <Form />
+          <List />
+        </div>
+      </TodoContext.Provider>
     );
 }
 
-export default App;
+export default TodoStore;
